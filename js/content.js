@@ -1,126 +1,78 @@
-// Contenu éditorial de Lueur. Modifie librement les textes ici.
-window.LUEUR_CONTENT = {
-  epreuves: [
-    {
-      id: "deuil", img: "1476611338391-6f395a0ebc7b", emoji: "🕯️", titre: "Le deuil", sous: "J'ai perdu quelqu'un",
-      validation: "Le chagrin est le prix de l'amour. Il n'y a pas de bonne manière de faire son deuil, ni de calendrier à respecter. Tu as le droit d'avoir mal aussi longtemps qu'il le faut.",
-      normal: "La fatigue écrasante, la colère, la culpabilité, les trous de mémoire, les vagues de larmes qui surgissent des mois plus tard au supermarché : tout cela fait partie du deuil. Tu ne deviens pas fou ou folle.",
-      etapes: ["Dire son prénom à voix haute, ou écrire un seul souvenir heureux.", "Boire un grand verre d'eau et manger quelque chose, même peu.", "Laisser quelqu'un t'aider pour une seule petite chose aujourd'hui."],
-      aide: "Si, après plusieurs mois, tu n'arrives plus du tout à fonctionner au quotidien, ou si tu as envie de rejoindre la personne disparue, parles-en à un médecin ou à un·e psychologue. Ce n'est pas un échec : c'est un deuil qui a besoin d'être accompagné."
-    },
-    {
-      id: "rupture", img: "1518199266791-5375a83190b7", emoji: "💔", titre: "Cœur brisé", sous: "Une rupture, un amour perdu",
-      validation: "Une rupture peut faire aussi mal qu'une blessure physique : le cerveau traite le rejet avec les mêmes circuits que la douleur. Ce que tu ressens n'est ni exagéré ni ridicule.",
-      normal: "Relire les messages, espérer un signe, idéaliser l'autre puis le détester dans la même heure : c'est un manque, presque comme un sevrage. Il diminue, même si ça ne semble pas possible aujourd'hui.",
-      etapes: ["Mettre ses photos et messages dans un dossier caché, sans les supprimer si c'est trop tôt.", "Envoyer un message à un·e ami·e : « Je ne vais pas bien, tu peux m'appeler ? »", "Sortir marcher 10 minutes, même sans but."],
-      aide: "Si la tristesse t'empêche de manger, de dormir ou de travailler depuis des semaines, ou si tu as des pensées de te faire du mal, il est temps de demander de l'aide à un professionnel."
-    },
-    {
-      id: "solitude", img: "1527137342181-19aab11a8ee8", emoji: "🌙", titre: "La solitude", sous: "Je me sens seul·e au monde",
-      validation: "Se sentir seul·e ne veut pas dire que tu ne vaux rien. Ça veut dire que tu as besoin de lien, comme tout être humain a besoin d'eau.",
-      normal: "La solitude rend méfiant·e et fatigué·e, ce qui rend le lien encore plus difficile. Ce cercle vicieux n'est pas ta faute — et il peut se briser par de tout petits gestes.",
-      etapes: ["Dire bonjour à une personne aujourd'hui : un voisin, une caissière, un livreur.", "Écrire un message à quelqu'un perdu de vue, juste « Je pensais à toi ».", "Déposer un message sur le mur ci-dessous : quelqu'un te répondra."],
-      aide: "Les lignes d'écoute (SOS Amitié, La Main Tendue, Télé-Accueil…) existent aussi pour la solitude. Tu n'as pas besoin d'être « en crise » pour appeler."
-    },
-    {
-      id: "depression", img: "1441974231531-c6227db76b6e", emoji: "🌫️", titre: "Le vide", sous: "Plus d'envie, plus de goût",
-      validation: "Quand tout devient gris et lourd, ce n'est pas de la paresse ni un manque de volonté. C'est souvent une dépression, et c'est une maladie qui se soigne.",
-      normal: "Se lever peut sembler une montagne. Les choses qu'on aimait ne font plus rien. On peut se sentir coupable de ne pas « réussir » à aller mieux. Tout cela, ce sont des symptômes, pas ta vérité.",
-      etapes: ["Ouvrir les volets ou la fenêtre 5 minutes.", "Prendre une douche, ou simplement se passer de l'eau sur le visage.", "Noter une chose, une seule, qui n'a pas été complètement horrible aujourd'hui."],
-      aide: "Si cet état dure plus de deux semaines, consulte un médecin généraliste : c'est la première porte, et il peut t'orienter. Si tu penses à mourir, appelle maintenant une ligne d'écoute ou le 112."
-    },
-    {
-      id: "anxiete", img: "1507525428034-b723cf961d3e", emoji: "🌊", titre: "L'angoisse", sous: "La peur qui serre la poitrine",
-      validation: "Une crise d'angoisse est terrifiante, mais elle n'est pas dangereuse. Elle monte, atteint un pic, puis redescend toujours — en général en moins de 20 minutes.",
-      normal: "Cœur qui bat fort, souffle court, mains qui tremblent, impression de perdre le contrôle : c'est ton système d'alarme qui se déclenche trop fort, pas ton corps qui lâche.",
-      etapes: ["Faire l'exercice de respiration plus bas pendant 3 minutes.", "Nommer 5 choses que tu vois, 4 que tu touches, 3 que tu entends.", "Poser les pieds bien à plat sur le sol et sentir son poids."],
-      aide: "Si les crises reviennent souvent ou t'empêchent de sortir, des thérapies (comme les TCC) sont très efficaces. Parles-en à ton médecin."
-    },
-    {
-      id: "maladie", img: "1455659817273-f96807779a8a", emoji: "🌱", titre: "La maladie", sous: "Mon corps ou celui d'un proche",
-      validation: "Recevoir un diagnostic, voir un proche souffrir, vivre avec la douleur au quotidien : c'est un deuil de la vie d'avant. Ta colère et ta peur sont légitimes.",
-      normal: "On peut se sentir seul·e même entouré·e, parce que les autres ne comprennent pas vraiment. On peut aussi être épuisé·e d'être « fort·e » pour tout le monde.",
-      etapes: ["T'autoriser une heure sans être « courageux·se ».", "Écrire les questions que tu n'as pas osé poser au médecin.", "Chercher une association de patients ou d'aidants pour ta situation."],
-      aide: "Beaucoup d'hôpitaux proposent un soutien psychologique gratuit aux patients et aux proches. Demande-le : tu y as droit."
-    },
-    {
-      id: "trauma", img: "1544027993-37dbfe43562a", emoji: "🛡️", titre: "Violence, trauma", sous: "On m'a fait du mal",
-      validation: "Ce qui t'est arrivé n'est pas ta faute. Rien de ce que tu as fait, dit ou porté ne justifie la violence. Tu as survécu, et c'est immense.",
-      normal: "Les flashbacks, les cauchemars, l'hypervigilance, la honte, l'impression d'être « cassé·e » : ce sont les réactions normales d'un esprit qui a vécu l'anormal.",
-      etapes: ["Si tu es en danger maintenant : appelle le 112 (ou le 17 en France).", "Écrire ce qui s'est passé avec la date, et le garder dans un endroit sûr.", "Identifier une personne de confiance à qui tu pourrais en parler."],
-      aide: "En France : 3919 (violences faites aux femmes), 119 (enfance en danger), 116 006 (aide aux victimes). Le bouton « Quitter vite » en haut ferme ce site instantanément."
-    },
-    {
-      id: "effondrement", img: "1499209974431-9dddcece7f88", emoji: "🧱", titre: "Tout s'effondre", sous: "Travail, argent, échec",
-      validation: "Perdre son travail, sa maison, un projet de vie : ce n'est pas seulement une question matérielle. C'est une perte d'identité et de sécurité, et ça mérite d'être pleuré aussi.",
-      normal: "La honte est souvent la plus lourde. Pourtant, tant de personnes ont traversé ça en silence. Ta valeur n'a jamais dépendu de ta réussite.",
-      etapes: ["Écrire noir sur blanc le problème le plus urgent, et seulement celui-là.", "Chercher un service d'aide gratuit (assistant·e social·e, mairie, association).", "Parler à quelqu'un sans chercher de solution, juste pour déposer."],
-      aide: "Si les difficultés financières te donnent l'impression qu'il n'y a pas d'issue, appelle une ligne d'écoute. Il existe presque toujours des aides que l'on ne connaît pas."
-    }
-  ],
-
-  // Messages d'espoir — textes originaux
-  espoir: [
-    "Tu n'as pas besoin de voir tout l'escalier. Juste la prochaine marche.",
-    "Les nuits les plus longues finissent aussi par le matin.",
-    "Ce n'est pas parce que tu as mal que tu es faible. C'est parce que tu as aimé, espéré, tenu.",
-    "Aujourd'hui, survivre suffit. Le reste peut attendre.",
-    "Ta douleur est réelle. Ton avenir aussi.",
-    "Tu as déjà traversé cent pour cent de tes pires jours. Tu es encore là.",
-    "Les vagues ne s'arrêtent pas, mais on apprend à nager.",
-    "Il n'y a pas de retard dans la guérison. Il n'y a que ton rythme.",
-    "Pleurer, c'est aussi une façon de respirer.",
-    "Un jour, tu repenseras à aujourd'hui et tu seras fier·e d'avoir tenu.",
-    "Tu n'es pas un fardeau. Tu es une personne qui porte un fardeau.",
-    "Même la plus petite flamme fait reculer l'obscurité.",
-    "Ce que tu ressens maintenant n'est pas ce que tu ressentiras toujours.",
-    "Demander de l'aide n'est pas abandonner. C'est refuser d'abandonner.",
-    "Le monde est un peu plus doux parce que tu y es.",
-    "Tu peux être en morceaux et quand même mériter l'amour.",
-    "Repose-toi. Tu n'as pas à mériter le repos.",
-    "Ceux qu'on a aimés ne s'en vont jamais tout à fait : ils changent de place en nous.",
-    "Le premier pas n'a pas besoin d'être grand. Il a juste besoin d'être fait.",
-    "Ici, tu n'as rien à prouver."
-  ],
-
-  // Lignes d'écoute gratuites — vérifie régulièrement les numéros
-  lignes: [
-    { pays: "France", items: [
-      { num: "3114", tel: "3114", desc: "Prévention du suicide · 24h/24, 7j/7" },
-      { num: "09 72 39 40 50", tel: "0972394050", desc: "SOS Amitié · écoute 24h/24" },
-      { num: "0 800 235 236", tel: "0800235236", desc: "Fil Santé Jeunes (12–25 ans)" },
-      { num: "3919", tel: "3919", desc: "Violences faites aux femmes" },
-      { num: "119", tel: "119", desc: "Enfance en danger" }
-    ]},
-    { pays: "Belgique", items: [
-      { num: "0800 32 123", tel: "080032123", desc: "Centre de Prévention du Suicide · 24h/24" },
-      { num: "107", tel: "107", desc: "Télé-Accueil · écoute" }
-    ]},
-    { pays: "Suisse", items: [
-      { num: "143", tel: "143", desc: "La Main Tendue · 24h/24" },
-      { num: "147", tel: "147", desc: "Pro Juventute (jeunes)" }
-    ]},
-    { pays: "Canada / Québec", items: [
-      { num: "988", tel: "988", desc: "Prévention du suicide (Canada) · 24h/24" },
-      { num: "1 866 277-3553", tel: "18662773553", desc: "1 866 APPELLE (Québec)" }
-    ]},
-    { pays: "Partout", items: [
-      { num: "112", tel: "112", desc: "Urgences (Europe et de nombreux pays)" },
-      { num: "findahelpline.com", href: "https://findahelpline.com/", desc: "Lignes d'écoute dans le monde entier" }
-    ]}
-  ],
-
-  categories: {
-    deuil: "Deuil", rupture: "Cœur brisé", solitude: "Solitude", depression: "Le vide",
-    anxiete: "Angoisse", maladie: "Maladie", trauma: "Violence", effondrement: "Tout s'effondre", autre: "Autre"
+// Données communes à toutes les langues.
+// Les textes traduits sont dans js/lang/fr.js, en.js, es.js.
+window.LUEUR_DATA = {
+  // Photo Unsplash associée à chaque épreuve
+  images: {
+    deuil: "1476611338391-6f395a0ebc7b",
+    rupture: "1518199266791-5375a83190b7",
+    solitude: "1527137342181-19aab11a8ee8",
+    depression: "1441974231531-c6227db76b6e",
+    anxiete: "1507525428034-b723cf961d3e",
+    maladie: "1455659817273-f96807779a8a",
+    trauma: "1544027993-37dbfe43562a",
+    effondrement: "1499209974431-9dddcece7f88"
   },
 
-  // Couleur associée à chaque catégorie (étiquettes du mur)
+  // Couleurs (sourdes) des catégories sur le mur
   couleurs: {
-    deuil: "#6b4ccf", rupture: "#e6336f", solitude: "#45bde6", depression: "#5f7581",
-    anxiete: "#1e9bc4", maladie: "#3aa35b", trauma: "#d9822b", effondrement: "#c49a0f", autre: "#0e4a63"
+    deuil: "#7d7a9c", rupture: "#a8848a", solitude: "#7792a6", depression: "#6f7784",
+    anxiete: "#6f98a0", maladie: "#859a86", trauma: "#a08a6c", effondrement: "#9a8f70", autre: "#5c6b7d"
   },
 
-  // Mots qui déclenchent la fenêtre de soutien avant publication
-  detresse: /suicid|me tuer|me suicider|en finir|mettre fin|plus envie de vivre|envie de mourir|veux mourir|me faire du mal|scarif|disparaître pour toujours|plus la force de vivre|tout arrêter/i
+  // Mots de détresse (FR / EN / ES) qui déclenchent la fenêtre de soutien
+  detresse: new RegExp([
+    "suicid", "me tuer", "en finir", "mettre fin à mes jours", "plus envie de vivre", "envie de mourir", "veux mourir",
+    "me faire du mal", "scarif", "plus la force de vivre",
+    "kill myself", "end it all", "end my life", "want to die", "don'?t want to live", "hurt myself", "self[- ]harm", "cut myself",
+    "matarme", "quitarme la vida", "acabar con todo", "quiero morir", "no quiero vivir", "hacerme daño", "autolesi", "cortarme"
+  ].join("|"), "i"),
+
+  // Lignes d'écoute gratuites. "langs" sert à afficher d'abord les pays de la langue choisie.
+  // "crisis: true" = proposé dans la fenêtre de soutien et le pied de page. Vérifie les numéros régulièrement.
+  lignes: [
+    { langs: ["fr"], pays: { fr: "France", en: "France", es: "Francia" }, items: [
+      { num: "3114", tel: "3114", crisis: true, desc: { fr: "Prévention du suicide · 24h/24", en: "Suicide prevention · 24/7", es: "Prevención del suicidio · 24 h" } },
+      { num: "09 72 39 40 50", tel: "0972394050", desc: { fr: "SOS Amitié · écoute 24h/24", en: "SOS Amitié · listening line 24/7", es: "SOS Amitié · escucha 24 h" } },
+      { num: "0 800 235 236", tel: "0800235236", desc: { fr: "Fil Santé Jeunes (12–25 ans)", en: "Fil Santé Jeunes (ages 12–25)", es: "Fil Santé Jeunes (12–25 años)" } },
+      { num: "3919", tel: "3919", desc: { fr: "Violences faites aux femmes", en: "Violence against women", es: "Violencia contra las mujeres" } }
+    ]},
+    { langs: ["fr"], pays: { fr: "Belgique", en: "Belgium", es: "Bélgica" }, items: [
+      { num: "0800 32 123", tel: "080032123", crisis: true, desc: { fr: "Centre de Prévention du Suicide · 24h/24", en: "Suicide Prevention Centre · 24/7", es: "Centro de Prevención del Suicidio · 24 h" } },
+      { num: "107", tel: "107", desc: { fr: "Télé-Accueil · écoute", en: "Télé-Accueil · listening line", es: "Télé-Accueil · escucha" } }
+    ]},
+    { langs: ["fr"], pays: { fr: "Suisse", en: "Switzerland", es: "Suiza" }, items: [
+      { num: "143", tel: "143", crisis: true, desc: { fr: "La Main Tendue · 24h/24", en: "La Main Tendue · 24/7", es: "La Main Tendue · 24 h" } },
+      { num: "147", tel: "147", desc: { fr: "Pro Juventute (jeunes)", en: "Pro Juventute (young people)", es: "Pro Juventute (jóvenes)" } }
+    ]},
+    { langs: ["en"], pays: { fr: "États-Unis", en: "United States", es: "Estados Unidos" }, items: [
+      { num: "988", tel: "988", crisis: true, desc: { fr: "Suicide & Crisis Lifeline · appel ou SMS", en: "Suicide & Crisis Lifeline · call or text", es: "Suicide & Crisis Lifeline · llamada o SMS (también en español)" } },
+      { num: "1-800-799-7233", tel: "18007997233", desc: { fr: "Violences conjugales", en: "National Domestic Violence Hotline", es: "Violencia doméstica" } }
+    ]},
+    { langs: ["en"], pays: { fr: "Royaume-Uni / Irlande", en: "UK / Ireland", es: "Reino Unido / Irlanda" }, items: [
+      { num: "116 123", tel: "116123", crisis: true, desc: { fr: "Samaritans · gratuit, 24h/24", en: "Samaritans · free, 24/7", es: "Samaritans · gratis, 24 h" } }
+    ]},
+    { langs: ["fr", "en"], pays: { fr: "Canada / Québec", en: "Canada", es: "Canadá" }, items: [
+      { num: "988", tel: "988", crisis: true, desc: { fr: "Prévention du suicide · 24h/24", en: "Suicide Crisis Helpline · 24/7", es: "Línea de crisis suicida · 24 h" } },
+      { num: "1 866 277-3553", tel: "18662773553", desc: { fr: "1 866 APPELLE (Québec)", en: "1 866 APPELLE (Quebec, French)", es: "1 866 APPELLE (Quebec, francés)" } }
+    ]},
+    { langs: ["en"], pays: { fr: "Australie", en: "Australia", es: "Australia" }, items: [
+      { num: "13 11 14", tel: "131114", crisis: true, desc: { fr: "Lifeline · 24h/24", en: "Lifeline · 24/7", es: "Lifeline · 24 h" } }
+    ]},
+    { langs: ["es"], pays: { fr: "Espagne", en: "Spain", es: "España" }, items: [
+      { num: "024", tel: "024", crisis: true, desc: { fr: "Ligne de prévention du suicide · 24h/24", en: "Suicide prevention line · 24/7", es: "Línea de atención a la conducta suicida · 24 h" } },
+      { num: "717 003 717", tel: "717003717", desc: { fr: "Teléfono de la Esperanza", en: "Teléfono de la Esperanza", es: "Teléfono de la Esperanza" } },
+      { num: "016", tel: "016", desc: { fr: "Violences de genre", en: "Gender-based violence", es: "Violencia de género" } }
+    ]},
+    { langs: ["es"], pays: { fr: "Mexique", en: "Mexico", es: "México" }, items: [
+      { num: "800 911 2000", tel: "8009112000", crisis: true, desc: { fr: "Línea de la Vida · 24h/24", en: "Línea de la Vida · 24/7", es: "Línea de la Vida · 24 h" } }
+    ]},
+    { langs: ["es"], pays: { fr: "Argentine", en: "Argentina", es: "Argentina" }, items: [
+      { num: "135", tel: "135", crisis: true, desc: { fr: "Centre d'assistance au suicide (Buenos Aires)", en: "Suicide assistance centre (Buenos Aires)", es: "Centro de Asistencia al Suicida (CABA y GBA)" } },
+      { num: "0800 345 1435", tel: "08003451435", desc: { fr: "Même service, tout le pays", en: "Same service, nationwide", es: "Mismo servicio, todo el país" } }
+    ]},
+    { langs: [], pays: { fr: "Partout", en: "Everywhere", es: "En todas partes" }, items: [
+      { num: "112", tel: "112", crisis: true, desc: { fr: "Urgences (Europe et de nombreux pays)", en: "Emergency (Europe and many countries)", es: "Emergencias (Europa y muchos países)" } },
+      { num: "findahelpline.com", href: "https://findahelpline.com/", desc: { fr: "Lignes d'écoute dans le monde entier", en: "Helplines worldwide", es: "Líneas de ayuda en todo el mundo" } }
+    ]}
+  ]
 };

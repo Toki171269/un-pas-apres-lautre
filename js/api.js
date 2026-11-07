@@ -15,8 +15,11 @@
     const text = await res.text();
     const data = text ? JSON.parse(text) : null;
     if (!res.ok) {
-      const msg = (data && (data.message || data.hint)) || "Une erreur est survenue.";
-      throw new Error(msg.includes("violates check constraint") ? "Message trop court ou trop long." : msg);
+      const t = window.I18N ? window.I18N.t : (k) => k;
+      const msg = (data && data.message) || "";
+      if (msg.includes("violates check constraint")) throw new Error(t("err.length"));
+      if (msg.includes("beaucoup écrit")) throw new Error(t("err.rate"));
+      throw new Error(t("err.generic"));
     }
     return data;
   }
@@ -68,7 +71,7 @@
     const now = Date.now();
     return {
       posts: [
-        { id: uid(), created_at: new Date(now - 36e5).toISOString(), pseudo: "Lune", category: "deuil", content: "Ça fait un an que mon père est parti. Tout le monde a repris sa vie, et moi j'ai l'impression d'être restée figée ce jour-là.", hugs: 12, replies: [{ id: uid(), created_at: new Date(now - 18e5).toISOString(), content: "Tu n'es pas figée, tu l'aimes encore. Un an, c'est tellement peu. 🤍" }] },
+        { id: uid(), created_at: new Date(now - 36e5).toISOString(), pseudo: "Lune", category: "deuil", content: "Ça fait un an que mon père est parti. Tout le monde a repris sa vie, et moi j'ai l'impression d'être restée figée ce jour-là.", hugs: 12, replies: [{ id: uid(), created_at: new Date(now - 18e5).toISOString(), content: "Tu n'es pas figée, tu l'aimes encore. Un an, c'est tellement peu." }] },
         { id: uid(), created_at: new Date(now - 72e5).toISOString(), pseudo: null, category: "rupture", content: "Elle est partie après six ans. Je ne sais plus qui je suis sans elle.", hugs: 7, replies: [] },
         { id: uid(), created_at: new Date(now - 864e5).toISOString(), pseudo: "Sam", category: "solitude", content: "Personne ne m'a parlé de la semaine. Juste écrire ici, ça fait du bien.", hugs: 21, replies: [{ id: uid(), created_at: new Date(now - 8e7).toISOString(), content: "Moi je te lis, Sam. Bonne soirée à toi." }] }
       ],

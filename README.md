@@ -1,4 +1,6 @@
-# Lueur — un refuge quand tout est sombre
+# Un pas après l'autre — un refuge quand tout est sombre
+
+*One step at a time · Paso a paso* — disponible en français, anglais et espagnol.
 
 Site web anonyme et bienveillant pour les personnes qui traversent une épreuve : deuil, cœur brisé, solitude, dépression, angoisse, maladie, violence, effondrement.
 
@@ -10,10 +12,11 @@ Site web anonyme et bienveillant pour les personnes qui traversent une épreuve 
 | La lumière du jour | Un message d'espoir par jour | — |
 | Ce que je traverse | 8 épreuves : mots de validation, « c'est normal », 3 petits pas à cocher, quand demander de l'aide | navigateur |
 | Respirer | Cercle guidé (cohérence 5-5, respiration carrée) | — |
-| Le mur des fardeaux | Messages anonymes, 🤍 de soutien, mots doux, signalement | **base** |
+| Le mur des fardeaux | Messages anonymes, soutien, mots doux, signalement | **base** |
 | Bougies | Allumer une bougie en mémoire de quelqu'un | **base** |
 | Lettre jamais envoyée | Écrire puis « laisser partir » (rien n'est enregistré) | — |
-| Lignes d'écoute | France, Belgique, Suisse, Canada + international | — |
+| Lignes d'écoute | France, Belgique, Suisse, Canada, États-Unis, Royaume-Uni, Australie, Espagne, Mexique, Argentine + international | — |
+| Langues | FR / EN / ES, choix mémorisé, langue du navigateur par défaut ; lignes d'écoute triées selon la langue | navigateur |
 | Sécurité | Bouton « Quitter vite » (ou Échap ×3), fenêtre de soutien si un message contient des mots de détresse | — |
 
 Pile : HTML/CSS/JS sans build · base **Supabase** (PostgreSQL gratuit) · hébergement statique gratuit (Netlify, Vercel ou GitHub Pages).
@@ -70,4 +73,6 @@ Ou directement dans **Table Editor**.
 
 ## Personnaliser
 
-Tous les textes (épreuves, messages d'espoir, numéros d'écoute, mots de détresse) sont dans [js/content.js](js/content.js). Pense à vérifier les numéros d'écoute régulièrement et à ajouter ceux de ton pays.
+- Textes fixes en français : directement dans [index.html](index.html) (attributs `data-i18n`).
+- Traductions et contenu (épreuves, messages d'espoir) : [js/lang/fr.js](js/lang/fr.js), [en.js](js/lang/en.js), [es.js](js/lang/es.js).
+- Données communes (photos, couleurs, lignes d'écoute par pays, mots de détresse) : [js/content.js](js/content.js). Pense à vérifier les numéros d'écoute régulièrement et à ajouter ceux de ton pays.

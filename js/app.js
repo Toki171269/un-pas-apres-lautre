@@ -33,9 +33,9 @@
   const root = document.documentElement;
   const savedTheme = store.get("lueur-theme", null);
   if (savedTheme) root.dataset.theme = savedTheme;
-  else if (matchMedia("(prefers-color-scheme: light)").matches) root.dataset.theme = "light";
   $("#theme-toggle").addEventListener("click", () => {
-    const next = root.dataset.theme === "light" ? "dark" : "light";
+    const isDark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+    const next = isDark ? "light" : "dark";
     root.dataset.theme = next; store.set("lueur-theme", next);
   });
 
@@ -72,11 +72,22 @@
   const detailEl = $("#epreuve-detail");
   C.epreuves.forEach((ep) => {
     cardsEl.append(h("button", { class: "epreuve-card", "aria-expanded": "false", "aria-controls": "epreuve-detail", onclick: () => openEpreuve(ep) },
-      h("span", { class: "emoji", "aria-hidden": "true" }, ep.emoji),
-      h("strong", {}, ep.titre),
-      h("span", { class: "sub" }, ep.sous)));
+      h("span", { class: "ep-img", style: `background-image:url('https://images.unsplash.com/photo-${ep.img}?auto=format&fit=crop&w=600&h=320&q=70')` },
+        h("span", { class: "ep-emoji", "aria-hidden": "true" }, ep.emoji)),
+      h("span", { class: "ep-body" },
+        h("strong", {}, ep.titre),
+        h("span", { class: "sub" }, ep.sous),
+        h("span", { class: "mini-btn" }, "Lire →"))));
+    $("#feel-select").append(h("option", { value: ep.id }, ep.emoji + "  " + ep.titre + " — " + ep.sous));
   });
-  function openEpreuve(ep) {
+  $("#feel-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const ep = C.epreuves.find((x) => x.id === $("#feel-select").value);
+    if (!ep) { $("#traverser").scrollIntoView({ behavior: "smooth" }); return; }
+    if (detailEl.dataset.id === ep.id && !detailEl.hidden) detailEl.hidden = true;
+    openEpreuve(ep, true);
+  });
+  function openEpreuve(ep, scrollTop) {
     const already = detailEl.dataset.id === ep.id && !detailEl.hidden;
     cardsEl.querySelectorAll(".epreuve-card").forEach((b, i) => b.setAttribute("aria-expanded", String(!already && C.epreuves[i].id === ep.id)));
     if (already) { detailEl.hidden = true; return; }
@@ -84,10 +95,14 @@
     const done = store.get(doneKey, []);
     detailEl.dataset.id = ep.id;
     detailEl.replaceChildren(
-      h("h3", {}, ep.emoji + " " + ep.titre),
-      h("p", { class: "validation" }, ep.validation),
-      h("h4", {}, "C'est normal"),
-      h("p", {}, ep.normal),
+      h("div", {},
+        h("h3", {}, ep.emoji + " " + ep.titre),
+        h("p", { class: "validation" }, ep.validation),
+        h("h4", {}, "C'est normal"),
+        h("p", {}, ep.normal),
+        h("h4", {}, "Quand demander de l'aide"),
+        h("p", {}, ep.aide)),
+      h("div", {},
       h("h4", {}, "Trois petites choses pour aujourd'hui"),
       h("ul", { class: "steps" }, ep.etapes.map((t, i) => {
         const li = h("li", { class: done.includes(i) ? "done" : "" });
@@ -100,13 +115,11 @@
         li.append(cb, h("label", { for: cb.id }, h("span", {}, t)));
         return li;
       })),
-      h("h4", {}, "Quand demander de l'aide"),
-      h("p", {}, ep.aide),
-      h("p", {}, h("a", { href: "#mur", onclick: () => { $("#post-category").value = ep.id; } }, "Déposer ce que je ressens sur le mur →"))
+      h("p", { style: "margin-top:22px" }, h("a", { class: "btn btn-pink", href: "#mur", onclick: () => { $("#post-category").value = ep.id; } }, "Déposer ce que je ressens →")))
     );
     detailEl.hidden = false;
     detailEl.focus({ preventScroll: true });
-    detailEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    detailEl.scrollIntoView({ behavior: "smooth", block: scrollTop ? "start" : "nearest" });
   }
 
   // ---------- Respiration ----------
@@ -180,9 +193,9 @@
       replyForm.querySelector("button").disabled = false;
     });
     const n = (p.replies || []).length;
-    return h("article", { class: "card post" },
+    return h("article", { class: "card post", style: `--cat:${C.couleurs[p.category] || C.couleurs.autre}` },
       h("div", { class: "post-head" },
-        h("span", {}, (p.pseudo || "Anonyme") + " · ", h("span", { class: "tag" }, C.categories[p.category] || "Autre")),
+        h("span", {}, h("span", { class: "who" }, p.pseudo || "Anonyme"), h("span", { class: "tag" }, C.categories[p.category] || "Autre")),
         h("time", { datetime: p.created_at }, timeAgo(p.created_at))),
       h("p", { class: "post-body" }, p.content),
       h("div", { class: "post-actions" },

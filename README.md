@@ -32,7 +32,7 @@ Un espace sans inscription pour parler, être écouté, lire les histoires des a
 
 1. **Base** — Supabase > SQL Editor : exécuter `supabase/reset_v1.sql` (une seule fois, retire les tables vides de la v1), puis `supabase/schema.sql`.
 2. **Edge Function** — Supabase > Edge Functions > *Deploy a new function* > nom `api`, coller `supabase/functions/api/index.ts`.
-3. **Clé Claude** — créer une clé sur https://console.anthropic.com (et fixer une limite de dépense), puis Supabase > Edge Functions > *Secrets* : `ANTHROPIC_API_KEY`. Facultatif : `CLAUDE_MODEL`, `CHAT_DAILY_LIMIT` (défaut 2000/jour), `IP_SALT` (une phrase aléatoire).
+3. **Clé de l'API Claude** — créer une clé sur https://platform.claude.com/settings/keys (et fixer une limite de dépense dans les réglages de facturation), puis Supabase > Edge Functions > *Secrets* : nom `CLAUDE_API_KEY`, valeur = la clé (`sk-ant-…`). Facultatif : `CLAUDE_MODEL`, `CHAT_DAILY_LIMIT` (défaut 2000/jour), `IP_SALT` (une phrase aléatoire).
 4. **Compte de modération** — Supabase > Authentication > Users > *Add user* (ton email + mot de passe fort), puis dans le SQL Editor :
    ```sql
    insert into public.admins (user_id) select id from auth.users where email = 'ton@email';

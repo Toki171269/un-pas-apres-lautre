@@ -3,7 +3,7 @@
 // codes de gestion secrets, signalements, et compagnon IA (Claude) en streaming.
 //
 // Secrets à définir (Supabase > Edge Functions > Secrets) :
-//   ANTHROPIC_API_KEY   (obligatoire pour l'IA et la modération IA)
+//   CLAUDE_API_KEY      (obligatoire pour l'IA et la modération IA ; ANTHROPIC_API_KEY accepté aussi)
 //   CLAUDE_MODEL        (facultatif, défaut : claude-haiku-5-5)
 //   CHAT_DAILY_LIMIT    (facultatif, défaut : 2000 messages IA / jour pour tout le site)
 //   IP_SALT             (facultatif, sel pour l'empreinte anonyme des IP)
@@ -15,7 +15,8 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 const db = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, {
   auth: { persistSession: false },
 });
-const ANTHROPIC_KEY = Deno.env.get("ANTHROPIC_API_KEY");
+// Clé de l'API Claude (platform.claude.com > Settings > API keys) : l'un ou l'autre nom de secret
+const ANTHROPIC_KEY = Deno.env.get("CLAUDE_API_KEY") || Deno.env.get("ANTHROPIC_API_KEY");
 const anthropic = ANTHROPIC_KEY ? new Anthropic({ apiKey: ANTHROPIC_KEY }) : null;
 const MODEL = Deno.env.get("CLAUDE_MODEL") || "claude-haiku-5-5";
 const CHAT_DAILY_LIMIT = Number(Deno.env.get("CHAT_DAILY_LIMIT") || 2000);

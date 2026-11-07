@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lueur — un refuge quand tout est sombre</title>
+  <meta name="description" content="Un espace doux et anonyme pour les cœurs brisés, les personnes en deuil et toutes celles et ceux qui traversent une épreuve.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕯️</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Bandeau d'urgence toujours visible -->
+  <div class="urgence-bar" role="region" aria-label="Aide urgente">
+    <span>En danger immédiat&nbsp;? Appelle le <a href="tel:112"><strong>112</strong></a> · Idées suicidaires (France) : <a href="tel:3114"><strong>3114</strong></a>, 24h/24</span>
+    <a href="#ecoute" class="urgence-link">Autres pays →</a>
+  </div>
+
+  <header class="site-header">
+    <a href="#accueil" class="logo"><span class="flame" aria-hidden="true"></span>Lueur</a>
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="#traverser">Ce que je traverse</a>
+      <a href="#respirer">Respirer</a>
+      <a href="#mur">Le mur</a>
+      <a href="#bougies">Bougies</a>
+      <a href="#lettre">Lettre</a>
+      <a href="#ecoute">Écoute</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" id="theme-toggle" aria-label="Changer de thème" title="Changer de thème">◐</button>
+      <button class="quick-exit" id="quick-exit" title="Quitter immédiatement ce site (touche Échap 3 fois)">Quitter vite ✕</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ACCUEIL -->
+    <section id="accueil" class="hero">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <p class="eyebrow">Tu es arrivé·e jusqu'ici.</p>
+      <h1>C'est déjà beaucoup.</h1>
+      <p class="lead">Que ton cœur soit brisé, que tu aies perdu quelqu'un, ou que tout semble s'effondrer : tu n'as pas besoin d'aller bien pour être ici. Pas de compte, pas de jugement. Juste un peu de lumière.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#respirer">Respirer un instant</a>
+        <a class="btn" href="#mur">Déposer ce que je porte</a>
+        <a class="btn btn-ghost" href="#ecoute">Parler à quelqu'un maintenant</a>
+      </div>
+
+      <figure class="lumiere" aria-live="polite">
+        <figcaption>La lumière du jour</figcaption>
+        <blockquote id="hope-text"></blockquote>
+        <button class="link-btn" id="hope-next">Une autre ↻</button>
+      </figure>
+    </section>
+
+    <!-- CE QUE JE TRAVERSE -->
+    <section id="traverser" class="section">
+      <h2>Ce que je traverse</h2>
+      <p class="section-lead">Choisis ce qui ressemble le plus à ce que tu vis. Tu trouveras des mots, et trois toutes petites choses possibles pour aujourd'hui.</p>
+      <div class="cards" id="epreuves"></div>
+      <article class="epreuve-detail" id="epreuve-detail" hidden tabindex="-1"></article>
+    </section>
+
+    <!-- RESPIRER -->
+    <section id="respirer" class="section section-alt">
+      <h2>Respirer</h2>
+      <p class="section-lead">Quand la vague monte, le souffle est la seule chose qu'on peut encore guider. Suis le cercle, sans forcer.</p>
+      <div class="breath">
+        <div class="breath-circle" id="breath-circle"><span id="breath-label">Prêt·e&nbsp;?</span></div>
+        <div class="breath-controls">
+          <div class="segmented" role="radiogroup" aria-label="Type de respiration">
+            <button role="radio" aria-checked="true" data-mode="coherence">Cohérence 5-5</button>
+            <button role="radio" aria-checked="false" data-mode="carre">Carré 4-4-4-4</button>
+          </div>
+          <button class="btn btn-primary" id="breath-toggle">Commencer</button>
+          <p class="muted small" id="breath-count">3 minutes suffisent souvent à apaiser le corps.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- MUR DES FARDEAUX -->
+    <section id="mur" class="section">
+      <h2>Le mur des fardeaux</h2>
+      <p class="section-lead">Écris ce que tu portes, anonymement. D'autres personnes pourront t'envoyer un <span aria-hidden="true">🤍</span> ou un mot doux. Tu n'es pas seul·e à avoir mal.</p>
+
+      <form class="card form" id="post-form">
+        <label for="post-content">Ce que j'ai sur le cœur</label>
+        <textarea id="post-content" maxlength="1500" rows="5" required placeholder="Tu peux tout écrire ici. Personne ne saura qui tu es."></textarea>
+        <div class="form-row">
+          <div>
+            <label for="post-pseudo">Prénom ou pseudo <span class="muted">(facultatif)</span></label>
+            <input id="post-pseudo" maxlength="30" placeholder="Anonyme">
+          </div>
+          <div>
+            <label for="post-category">C'est plutôt…</label>
+            <select id="post-category"></select>
+          </div>
+        </div>
+        <div class="form-foot">
+          <span class="muted small"><span id="post-chars">0</span>/1500 · Pas de nom, d'adresse ni de numéro de téléphone, pour te protéger.</span>
+          <button class="btn btn-primary" type="submit">Déposer</button>
+        </div>
+        <p class="form-msg" id="post-msg" role="status"></p>
+      </form>
+
+      <div class="filters" id="post-filters" role="toolbar" aria-label="Filtrer les messages"></div>
+      <div class="posts" id="posts" aria-live="polite"></div>
+      <div class="center"><button class="btn btn-ghost" id="posts-more" hidden>Voir plus</button></div>
+    </section>
+
+    <!-- BOUGIES -->
+    <section id="bougies" class="section section-alt">
+      <h2>Allumer une bougie</h2>
+      <p class="section-lead">Pour quelqu'un qui est parti, pour un amour perdu, pour toi-même. Chaque flamme reste allumée ici, à côté des autres.</p>
+      <form class="card form candle-form" id="candle-form">
+        <div class="form-row">
+          <div>
+            <label for="candle-name">Pour…</label>
+            <input id="candle-name" maxlength="60" required placeholder="Maman, Léo, moi-même, l'enfant que j'étais…">
+          </div>
+          <div>
+            <label for="candle-msg">Quelques mots <span class="muted">(facultatif)</span></label>
+            <input id="candle-msg" maxlength="200" placeholder="Tu me manques chaque jour.">
+          </div>
+        </div>
+        <div class="form-foot">
+          <span class="muted small"><strong id="candle-count">0</strong> bougies brillent en ce moment.</span>
+          <button class="btn btn-primary" type="submit">Allumer 🕯️</button>
+        </div>
+        <p class="form-msg" id="candle-msg-status" role="status"></p>
+      </form>
+      <div class="candles" id="candles" aria-live="polite"></div>
+    </section>
+
+    <!-- LETTRE JAMAIS ENVOYÉE -->
+    <section id="lettre" class="section">
+      <h2>La lettre jamais envoyée</h2>
+      <p class="section-lead">Écris à la personne qui est partie, à celle qui t'a blessé·e, ou à toi-même. <strong>Rien n'est envoyé, rien n'est enregistré.</strong> Quand tu es prêt·e, laisse-la partir.</p>
+      <div class="letter-wrap">
+        <textarea id="letter" class="letter" rows="10" placeholder="Cher·e …,&#10;&#10;Il y a des choses que je n'ai jamais pu te dire…"></textarea>
+        <div class="letter-actions">
+          <button class="btn btn-primary" id="letter-release">Laisser partir ✦</button>
+        </div>
+        <p class="letter-after muted" id="letter-after" hidden>C'est parti. Ce que tu as écrit existe, même si personne ne l'a lu. Prends soin de toi maintenant&nbsp;: un verre d'eau, une fenêtre ouverte, quelques respirations.</p>
+      </div>
+    </section>
+
+    <!-- LIGNES D'ÉCOUTE -->
+    <section id="ecoute" class="section section-alt">
+      <h2>Parler à quelqu'un, maintenant</h2>
+      <p class="section-lead">Ces personnes sont formées pour écouter, sans juger. Appeler n'est pas déranger&nbsp;: c'est exactement pour ça qu'elles sont là.</p>
+      <div class="helplines" id="helplines"></div>
+      <p class="muted small center">Ailleurs dans le monde&nbsp;: <a href="https://findahelpline.com/" target="_blank" rel="noopener">findahelpline.com</a> recense les lignes d'écoute gratuites de plus de 130 pays.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p><span class="flame small-flame" aria-hidden="true"></span> Lueur ne remplace pas un·e professionnel·le de santé. Si tu es en danger, appelle le <a href="tel:112">112</a>.</p>
+    <p class="muted small">Messages anonymes, modérés par la communauté (3 signalements = message masqué). Aucune publicité, aucun traçage.</p>
+    <p class="muted small" id="mode-info"></p>
+  </footer>
+
+  <!-- Fenêtre de soutien (détection de détresse) -->
+  <dialog id="care-dialog" class="dialog">
+    <h3>Ce que tu ressens compte énormément.</h3>
+    <p>Tes mots ressemblent à ceux de quelqu'un qui a très mal en ce moment. Tu n'as pas à porter ça seul·e cette nuit. Quelqu'un peut t'écouter, tout de suite, gratuitement&nbsp;:</p>
+    <ul class="care-list">
+      <li><a href="tel:3114"><strong>3114</strong></a> — France, prévention du suicide, 24h/24</li>
+      <li><a href="tel:143"><strong>143</strong></a> — Suisse, La Main Tendue</li>
+      <li><a href="tel:080032123"><strong>0800 32 123</strong></a> — Belgique, Centre de Prévention du Suicide</li>
+      <li><a href="tel:988"><strong>988</strong></a> — Canada · <a href="tel:18662773553">1 866 277-3553</a> Québec</li>
+      <li><a href="tel:112"><strong>112</strong></a> — urgence, partout en Europe</li>
+    </ul>
+    <div class="dialog-actions">
+      <a class="btn btn-primary" href="#ecoute" id="care-see">Voir toutes les lignes d'écoute</a>
+      <button class="btn btn-ghost" id="care-continue">Publier quand même</button>
+    </div>
+  </dialog>
+
+  <script src="js/config.js"></script>
+  <script src="js/content.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

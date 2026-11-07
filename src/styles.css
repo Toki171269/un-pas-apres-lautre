@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+/* Thème : brume et ardoise, l'ambre comme seule lueur. Design plat : pas d'ombres. */
+:root {
+  --bg: #eef0f2;
+  --bg-soft: #e5e8ec;
+  --surface: #f8f9fa;
+  --surface-2: #eceff2;
+  --border: #d6dbe1;
+  --text: #2b3440;
+  --muted: #5f6975;
+  --night: #2f3a48;
+  --night-deep: #232c37;
+  --hope: #d4a24c;
+  --hope-hover: #c39340;
+  --hope-ink: #1f2630;
+  --hope-text: #8a5f1a;
+  --hope-soft: #f3ead9;
+  --danger: #a33d3d;
+  --mist-a: #8b88a6;
+  --mist-b: #7d97ab;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161b22; --bg-soft: #1b212a; --surface: #1f2630; --surface-2: #262e39; --border: #313a47;
+    --text: #dde2e8; --muted: #9ca6b2; --night: #1e2631; --night-deep: #12171e;
+    --hope: #e0b264; --hope-hover: #ebc27b; --hope-text: #e6bb72; --hope-soft: #2e2a22; --danger: #e59a9a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #161b22; --bg-soft: #1b212a; --surface: #1f2630; --surface-2: #262e39; --border: #313a47;
+  --text: #dde2e8; --muted: #9ca6b2; --night: #1e2631; --night-deep: #12171e;
+  --hope: #e0b264; --hope-hover: #ebc27b; --hope-text: #e6bb72; --hope-soft: #2e2a22; --danger: #e59a9a;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-soft: var(--bg-soft);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--border);
+  --color-ink: var(--text);
+  --color-muted: var(--muted);
+  --color-night: var(--night);
+  --color-night-deep: var(--night-deep);
+  --color-hope: var(--hope);
+  --color-hope-hover: var(--hope-hover);
+  --color-hope-ink: var(--hope-ink);
+  --color-hope-text: var(--hope-text);
+  --color-hope-soft: var(--hope-soft);
+  --color-danger: var(--danger);
+  --color-mist-a: var(--mist-a);
+  --color-mist-b: var(--mist-b);
+  --font-head: "Nunito", system-ui, sans-serif;
+  --font-sans: "Open Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --radius-ui: 6px;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { @apply bg-bg text-ink font-sans antialiased; line-height: 1.65; }
+  h1, h2, h3, h4 { @apply font-head font-extrabold; line-height: 1.2; }
+  a { @apply text-hope-text; }
+  :focus-visible { outline: 2px solid var(--hope); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+  :root[data-motion="off"] *, :root[data-motion="off"] *::before, :root[data-motion="off"] *::after {
+    animation: none !important; transition: none !important;
+  }
+}
+
+@layer components {
+  .wrap { @apply mx-auto w-full max-w-6xl px-4 sm:px-6; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-ui border border-transparent px-5 py-2.5 font-head text-[0.95rem] font-bold no-underline transition-colors disabled:cursor-wait disabled:opacity-60; }
+  .btn-hope { @apply bg-hope text-hope-ink hover:bg-hope-hover; }
+  .btn-line { @apply border-line bg-transparent text-ink hover:border-muted; }
+  .btn-night { @apply bg-night text-white hover:opacity-90; }
+  .btn-sm { @apply px-3 py-1.5 text-sm; }
+  .card { @apply rounded-ui border border-line bg-surface p-5; }
+  .field { @apply w-full rounded-ui border border-line bg-surface px-3.5 py-2.5 text-ink placeholder:text-muted focus:border-hope focus:outline-none; }
+  .label { @apply mb-1 block font-head text-sm font-bold; }
+  .eyebrow { @apply mb-2 inline-block font-head text-xs font-extrabold uppercase tracking-widest text-hope-text; }
+  .chip { @apply rounded-ui border border-line px-3 py-1 font-head text-sm font-bold text-ink; }
+  .chip[aria-pressed="true"] { @apply border-night bg-night text-white; }
+  .h2 { @apply mb-3 text-3xl sm:text-4xl; }
+  .lead { @apply text-lg text-muted; }
+  .photo { filter: grayscale(.35) saturate(.85); }
+  .prose-soft p { @apply mb-3; }
+}
+
+@keyframes flicker { 0%, 100% { transform: scale(1); } 40% { transform: scale(1.05, .95); } 70% { transform: scale(.96, 1.04); } }
+.flame { width: 12px; height: 18px; display: inline-block; background: var(--hope); border-radius: 50% 50% 45% 45% / 65% 65% 35% 35%; animation: flicker 2.8s ease-in-out infinite; transform-origin: 50% 90%; }
+@keyframes blink { 50% { opacity: .2; } }
+.typing span { animation: blink 1.2s infinite; }
+.typing span:nth-child(2) { animation-delay: .2s; }
+.typing span:nth-child(3) { animation-delay: .4s; }

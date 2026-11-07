@@ -1,78 +1,62 @@
-# Un pas après l'autre — un refuge quand tout est sombre
+# Un pas après l'autre — plateforme anonyme d'écoute et de soutien
 
-*One step at a time · Paso a paso* — disponible en français, anglais et espagnol.
+*One step at a time · Paso a paso* — français, anglais, espagnol.
 
-Site web anonyme et bienveillant pour les personnes qui traversent une épreuve : deuil, cœur brisé, solitude, dépression, angoisse, maladie, violence, effondrement.
+Un espace sans inscription pour parler, être écouté, lire les histoires des autres, aider, et trouver des ressources quand on traverse une épreuve.
 
-## Fonctionnalités
+- Site : https://toki171269.github.io/un-pas-apres-lautre/
+- Modération : https://toki171269.github.io/un-pas-apres-lautre/#/admin
 
-| Section | Description | Données |
-|---|---|---|
-| Bandeau d'urgence | 112 / 3114 toujours visibles | — |
-| La lumière du jour | Un message d'espoir par jour | — |
-| Ce que je traverse | 8 épreuves : mots de validation, « c'est normal », 3 petits pas à cocher, quand demander de l'aide | navigateur |
-| Respirer | Cercle guidé (cohérence 5-5, respiration carrée) | — |
-| Le mur des fardeaux | Messages anonymes, soutien, mots doux, signalement | **base** |
-| Bougies | Allumer une bougie en mémoire de quelqu'un | **base** |
-| Lettre jamais envoyée | Écrire puis « laisser partir » (rien n'est enregistré) | — |
-| Lignes d'écoute | France, Belgique, Suisse, Canada, États-Unis, Royaume-Uni, Australie, Espagne, Mexique, Argentine + international | — |
-| Langues | FR / EN / ES, choix mémorisé, langue du navigateur par défaut ; lignes d'écoute triées selon la langue | navigateur |
-| Sécurité | Bouton « Quitter vite » (ou Échap ×3), fenêtre de soutien si un message contient des mots de détresse | — |
+## Fonctionnalités (version 1 du cahier des charges)
 
-Pile : HTML/CSS/JS sans build · base **Supabase** (PostgreSQL gratuit) · hébergement statique gratuit (Netlify, Vercel ou GitHub Pages).
+| Domaine | Ce qui existe |
+|---|---|
+| Accueil | Message d'accueil, mission, choix facultatif de situation (13 dont « Je ne sais pas »), « Aide-moi à traverser cette journée », mots réconfortants, espaces |
+| Navigation | Accueil · Parler avec l'IA · Communauté · Déposer son histoire · Histoires d'espoir · Aider quelqu'un · Ressources, + bouton « J'ai besoin d'aide maintenant » et bandeau d'urgence permanents, « Quitter vite » (ou Échap ×3) |
+| Communauté | Fil avec modes (récentes, sans réponse, avec réponses, espoir) et filtre par situation ; 5 espaces thématiques + histoires d'espoir ; réponses sur 2 niveaux ; 5 réactions de soutien (jamais utilisées pour classer) ; bougies dans l'espace Deuil |
+| Publication | Titre, texte, situation, espace, pseudonyme aléatoire, réponses autorisées ou non ; histoires d'espoir structurées avec consentement ; **code de gestion secret** pour modifier/supprimer (seule son empreinte SHA-256 est stockée) |
+| Encouragements | Mur, message mis en avant aléatoire, bouton « J'avais besoin de lire cela aujourd'hui » |
+| Compagnon IA « Lueur » | Claude via l'API Anthropic, en streaming, sans compte ni mémoire (onglet seulement), suggestions, copier/effacer/recommencer, détection de crise (règles + IA) avec panneau d'urgence indépendant de l'IA, suggestions d'espaces/exercices/ressources |
+| Ressources | 11 guides, respiration guidée, ancrage 5-4-3-2-1, lettre jamais envoyée avec aide de l'IA, préparation de consultation (téléchargeable), annuaire par pays (sélecteur manuel, sans géolocalisation) |
+| Sécurité | Modération hybride (règles + IA, mise en attente des contenus douteux, priorité 0–3), signalements avec 9 motifs et priorité, retrait automatique après signalements, anti-spam par empreinte d'IP salée (effacée après 24 h), plafond quotidien de messages IA |
+| Administration | Connexion Supabase Auth, file « À traiter » par priorité, signalements, publications par statut, journal de modération, statistiques anonymes |
 
-Sans configuration, le site fonctionne en **mode démo** (données dans le navigateur uniquement).
+## Architecture
 
-## Tester en local
+- **Frontend** : React + Vite + Tailwind CSS (`src/`), publié sur GitHub Pages par `.github/workflows/deploy.yml` à chaque `git push`.
+- **Base** : Supabase PostgreSQL (`supabase/schema.sql`). Le public ne peut que **lire** les contenus visibles (RLS + colonnes autorisées).
+- **API** : Edge Function Supabase `api` (`supabase/functions/api/index.ts`). Toutes les écritures publiques y passent : modération, anti-spam, codes secrets, signalements, IA.
+- **IA** : SDK `@anthropic-ai/sdk`, modèle `claude-haiku-5-5` par défaut (secret `CLAUDE_MODEL` pour changer).
+
+## Installation (une seule fois)
+
+1. **Base** — Supabase > SQL Editor : exécuter `supabase/reset_v1.sql` (une seule fois, retire les tables vides de la v1), puis `supabase/schema.sql`.
+2. **Edge Function** — Supabase > Edge Functions > *Deploy a new function* > nom `api`, coller `supabase/functions/api/index.ts`.
+3. **Clé Claude** — créer une clé sur https://console.anthropic.com (et fixer une limite de dépense), puis Supabase > Edge Functions > *Secrets* : `ANTHROPIC_API_KEY`. Facultatif : `CLAUDE_MODEL`, `CHAT_DAILY_LIMIT` (défaut 2000/jour), `IP_SALT` (une phrase aléatoire).
+4. **Compte de modération** — Supabase > Authentication > Users > *Add user* (ton email + mot de passe fort), puis dans le SQL Editor :
+   ```sql
+   insert into public.admins (user_id) select id from auth.users where email = 'ton@email';
+   ```
+   Désactive les inscriptions publiques : Authentication > Sign In / Providers > *Allow new users to sign up* = off.
+
+## Développement
 
 ```bash
-npx http-server -p 5173 -c-1 .
+npm install
+npm run dev      # http://localhost:5173/un-pas-apres-lautre/
+npm run build
 ```
-Puis ouvrir http://localhost:5173
 
-## 1. Créer la base (Supabase, gratuit)
+## Contenu à faire vérifier avant de faire connaître le site
 
-1. Crée un compte sur https://supabase.com → **New project** (région Europe, ex. Paris/Frankfurt).
-2. Menu **SQL Editor** → **New query** → colle le contenu de [supabase/schema.sql](supabase/schema.sql) → **Run**.
-3. Menu **Project Settings → API** : copie **Project URL** et la clé **anon public**.
-4. Colle-les dans [js/config.js](js/config.js) :
-   ```js
-   window.LUEUR_CONFIG = {
-     supabaseUrl: "https://xxxx.supabase.co",
-     supabaseAnonKey: "eyJhbGciOi..."
-   };
-   ```
-   La clé `anon` est publique par nature ; la sécurité vient des règles RLS du schéma (lecture des messages visibles, ajout seulement, aucune modification ni suppression publique, 5 publications / 10 min par IP, masquage auto à 3 signalements).
-   **Ne mets jamais la clé `service_role` dans le site.**
+- Les **numéros d'écoute** (`src/lib/data.js`, date `HELP_UPDATED`) : à confirmer sur les sites officiels de chaque pays.
+- Les **guides** (`src/i18n/*.js` > `res.guides`) : relecture par un·e professionnel·le de santé mentale recommandée.
+- Les **traductions** anglaise et espagnole : relecture par des locuteurs natifs.
+- Les **consignes de l'IA** (`supabase/functions/api/index.ts` > `companionPrompt`) : à tester avec des scénarios variés, y compris de crise.
 
-> Le plan gratuit met le projet en pause après ~7 jours sans aucune visite ; il suffit de le relancer depuis le tableau de bord.
+## Limites connues
 
-## 2. Mettre en ligne (gratuit)
-
-**Option A — Netlify Drop (le plus simple, 1 minute)**
-1. Va sur https://app.netlify.com/drop (compte gratuit).
-2. Glisse-dépose le dossier `Projet` entier. C'est en ligne (`https://xxx.netlify.app`).
-3. Pour mettre à jour : *Deploys* → glisse à nouveau le dossier.
-
-**Option B — GitHub + Vercel/Netlify (mises à jour automatiques)**
-1. Crée un dépôt GitHub et pousse ce dossier.
-2. Sur https://vercel.com (ou Netlify) → *Add New Project* → importe le dépôt → Framework : **Other**, pas de commande de build → *Deploy*.
-3. Chaque `git push` redéploie le site.
-
-**Option C — GitHub Pages** : dépôt → *Settings → Pages* → Source `main` / racine.
-
-## Modération
-
-Dans Supabase → SQL Editor :
-```sql
-select * from posts where reports > 0 order by reports desc;      -- contenus signalés
-update posts set hidden = false, reports = 0 where id = '...';    -- ré-afficher
-delete from posts where id = '...';                               -- supprimer
-```
-Ou directement dans **Table Editor**.
-
-## Personnaliser
-
-- Textes fixes en français : directement dans [index.html](index.html) (attributs `data-i18n`).
-- Traductions et contenu (épreuves, messages d'espoir) : [js/lang/fr.js](js/lang/fr.js), [en.js](js/lang/en.js), [es.js](js/lang/es.js).
-- Données communes (photos, couleurs, lignes d'écoute par pays, mots de détresse) : [js/content.js](js/content.js). Pense à vérifier les numéros d'écoute régulièrement et à ajouter ceux de ton pays.
+- La détection automatique des crises est imparfaite : les ressources d'urgence restent toujours visibles, indépendamment de l'IA.
+- Aucune surveillance humaine permanente : la modération dépend de la disponibilité de l'équipe.
+- Supabase gratuit met le projet en pause après ~7 jours sans activité.
+- Version 2 (non incluse) : mise en relation avec des écoutants bénévoles, groupes de soutien, bibliothèque audio.
